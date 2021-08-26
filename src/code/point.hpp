@@ -2,11 +2,12 @@
 
 class Point
 {
-private:
+public:
     /* data */
     raylib::Color color;
     raylib::Vector2 position;
     float size;
+    bool isBeingDragged = false;
 
 public:
     Point(raylib::Color color, raylib::Vector2 position);
@@ -16,7 +17,9 @@ public:
 public:
     void Draw();
     static void DrawNew(raylib::Color drawColor, raylib::Vector2 drawPosition, float drawSize);
+
+    void GetDraged();
+    void Update();
+    void MoveToMouse();
 };
-
-
 
