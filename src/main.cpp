@@ -1,6 +1,7 @@
 #include "raylib-cpp.hpp"
 #include "Vector3.hpp"
 #include "point.hpp"
+#include "RayMowdl.hpp"
 #include <vector>
 
 #include <iostream>
@@ -27,7 +28,7 @@ int main() {
 
     float t = 0.0f;
 
-
+    Camera2D cam{Vector2{0,0}, Vector2{0,0}, 0, 1.0f};
 
     // Main game loop
     while (!w.ShouldClose()) // Detect window close button or ESC key
@@ -46,25 +47,34 @@ int main() {
         t += deltaTime * 0.1f   ;
         t = t * (t < 1);
 
+        cam.target = RayMowdl::MoveVector2DWithArrows(cam.target, deltaTime, 200);
+        
+
+
         // Draw
         BeginDrawing();
 
-        raylib::Color(RED).DrawText("Draw", 1000, 1000, 20);
+            raylib::Color(RED).DrawText("Draw", 1000, 1000, 20);
 
-        DrawFPS(10, 10);
+            DrawFPS(10, 10);
 
-        ClearBackground(RAYWHITE);
-        textColor.DrawText("Congrats! You created your first window!", 190, 200, 20);
-        textColor.DrawLineBezier(Vector2{1,1}, Vector2{1920, 1080}, 10.0f);
+            ClearBackground(RAYWHITE);
+            textColor.DrawText("Congrats! You created your first window!", 190, 200, 20);
 
-        point1.Draw();
-        point2.Draw();
-        point3.Draw();
+            BeginMode2D(cam);
 
-        Point::DrawNew(BLACK, lerped1, 0.5f);        
-        Point::DrawNew(BLACK, lerped2, 0.5f);        
+                point1.Draw();
+                point2.Draw();
+                point3.Draw();
 
-        Point::DrawNew(BLUE, lerped3, 1.5f);
+                Point::DrawNew(BLACK, lerped1, 0.5f);        
+                Point::DrawNew(BLACK, lerped2, 0.5f);        
+
+                Point::DrawNew(BLUE, lerped3, 1.5f);
+
+                center.DrawCircle(500, BLUE);
+                
+            EndMode2D();
 
         EndDrawing();
     }
